@@ -1,4 +1,5 @@
 import { Channel, ConsumeMessage } from 'amqplib'
+import logger from './logger'
 
 export default class DelayedConsumer {
     private channel: Channel
@@ -17,7 +18,7 @@ export default class DelayedConsumer {
     messageHandler(message: ConsumeMessage | null) {
         if(!message) throw new Error('Invalid message')
         const content = message?.content.toString()
-        console.info('Message consumed', { content })
+        logger.info({ content }, 'Message consumed')
         this.channel.ack(message)
     }
 

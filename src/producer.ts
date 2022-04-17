@@ -1,6 +1,7 @@
 import { Channel } from 'amqplib'
 import { Buffer } from 'buffer'
 import ExchangeTypes from './exchange-types'
+import logger from './logger'
 
 export default class Producer {
     private channel: Channel
@@ -21,9 +22,6 @@ export default class Producer {
 
     async publish(message: string) {
         await this.channel.publish(this.exchange, '', Buffer.from(message))
-        console.info('New message published', {
-            exchange: this.exchange,
-            message 
-        })
+        logger.info({ exchange: this.exchange, message }, 'New message published')
     }
 }
