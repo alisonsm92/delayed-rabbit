@@ -6,10 +6,12 @@ import logger from './logger'
 export default class Producer {
     private channel: Channel
     private exchange: string
+    private routingKey: string
 
     constructor(channel: Channel, exchange: string) {
         this.channel = channel
         this.exchange = exchange
+        this.routingKey = ''
     }
 
     async setup() {
@@ -20,8 +22,13 @@ export default class Producer {
         )
     }
 
-    async publish(message: string) {
-        await this.channel.publish(this.exchange, '', Buffer.from(message))
+    async publish(message: string, ttl: number) {
+        await this.channel.publish(
+            this.exchange,
+            this.routingKey, 
+            Buffer.from(message), 
+            { expiration: ttl }
+        )
         logger.info({ exchange: this.exchange, message }, 'New message published')
     }
 }

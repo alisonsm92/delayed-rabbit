@@ -4,15 +4,17 @@ import logger from './logger'
 export default class DelayedConsumer {
     private channel: Channel
     private queue: string
+    private routingKey: string
 
     constructor(channel: Channel, queue: string) {
         this.channel = channel
         this.queue = queue
+        this.routingKey = ''
     }
 
     async setup(exchange: string) {
         await this.channel.assertQueue(this.queue)
-        await this.channel.bindQueue(this.queue, exchange, '')
+        await this.channel.bindQueue(this.queue, exchange, this.routingKey)
     }
 
     messageHandler(message: ConsumeMessage | null) {
