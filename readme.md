@@ -6,57 +6,8 @@ Utilizada a solução sugerida na documentação do CloudAMQP ([delayed-messages
 
 ## To-do list
 
-- [ ] Implementar um CLI para configurar e executar comandos;
-  - [ ] Definir o número de mensagens a serem publicadas;
-  - [ ] Definir o intervalo de "atraso" entre as mensagens;
-  - [ ] Executar comando para publicar mensagens.
+- [ x ] Implementar um CLI para configurar e executar comandos;
+  - [ x ] Definir o número de mensagens a serem publicadas;
+  - [ x ] Definir o intervalo de "atraso" entre as mensagens;
+  - [ x ] Executar comando para publicar mensagens.
 - [ ] Desenhar um fluxograma para ilustrar solução.
-
-## CLI
-
-- Selecione o que deseja executar:
-  - Produtor de mensagens:
-    - Exchange:
-      - Opções:
-        - Configurar
-          - Tipo
-          - Nome
-          - Routing key
-        - Usar configuração padrão
-    - Mensagens:
-      - Nº de mensagens a serem publicado
-      - Intervalo de delay entre as mensagens (em Milissegundos)
-    - Inicializar produtor de mensagens?
-      - Sim
-        - Inicializa o envio dos mensagens
-      - Não
-        - Encerra o processo
-  - Consumidor de mensagens:
-    - Exchange:
-      - Opções:
-        - Configurar
-          - Tipo
-          - Nome
-          - Routing key
-        - Usar configuração padrão
-    - Executar consumidor de mensagens?
-      - Sim
-        - Inicializa consumidor
-      - Não
-        - Encerra o processo
-  - Produtor e consumidor mensagens:
-    - Exchange:
-      - Opções:
-        - Configurar
-          - Tipo
-          - Nome
-          - Routing key
-        - Usar configuração padrão
-    - Mensagens:
-      - Nº de mensagens a serem publicado
-      - Intervalo de delay entre as mensagens (em Milissegundos)
-    - Executar consumidor de mensagens?
-      - Sim
-        - Inicializa consumidor
-      - Não
-        - Encerra o processo

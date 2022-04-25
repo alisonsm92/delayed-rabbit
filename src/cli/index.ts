@@ -1,25 +1,40 @@
 import inquirer from 'inquirer'
-import startup, { StartupAnswers } from './questions/startup'
+import initializers from './questions/initializers'
+import exchange from './questions/exchange'
+import messages from './questions/messages'
+import Configuration from '../configuration'
+import defaults from '../defaults'
+import Initializers from '../initializers'
+import ExchangeTypes from '../exchange-types'
+import ExchangeConfigOptions from '../exchange-config-options'
 
-enum Initializers { producer = 'PRODUCER', consumer = 'CONSUMER' }
+type InputConfiguration = {
+    initializers: Initializers[]
+    exchangeConfigOptions: ExchangeConfigOptions
+    exchangeName?: string
+    exchangeType?: ExchangeTypes
+    routingKey?: string,
+    numberOfMessages?: number
+    delay?: number
+}
 
-let initializers: Initializers[] = []
-
-const setInitializers = (options: Initializers[]) => () => initializers = options
-const exit = () => process.exit()
-
-const startupMapper = {
-    [startup.answers.producer]: setInitializers([Initializers.producer]),
-    [startup.answers.consumer]: setInitializers([Initializers.consumer]),
-    [startup.answers.producerAndConsumer]: setInitializers([
-        Initializers.producer, Initializers.consumer]
-    ),
-    [startup.answers.exit]: exit,
+function setDefaults(inputConfig: InputConfiguration): Configuration {
+    return { 
+        initializers: inputConfig.initializers,
+        exchangeConfigOptions: inputConfig.exchangeConfigOptions,
+        exchangeName: inputConfig.exchangeName || defaults.DESTINATION_EXCHANGE,
+        exchangeType: inputConfig.exchangeType || defaults.DESTINATION_EXCHANGE_TYPE,
+        routingKey: inputConfig.routingKey || defaults.ROUTING_KEY,
+        numberOfMessages: inputConfig.numberOfMessages || defaults.NUMBER_OF_MESSAGES,
+        delay: inputConfig.delay || defaults.MESSAGE_TTL
+     }
 }
 
 export default async function execute() {
-    const  answers = await inquirer.prompt<{startup: StartupAnswers}>([
-        startup.question
+    const inputConfig = await inquirer.prompt<Configuration>([
+        ...initializers.questions,
+        ...messages.questions,
+        ...exchange.questions,
     ])
-    startupMapper[answers.startup]() ?? exit()
+    return setDefaults(inputConfig)
 }

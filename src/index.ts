@@ -2,44 +2,46 @@ import dotenv from 'dotenv'
 dotenv.config()
 import amqp from 'amqplib'
 import env from './environment'
+import defaults from './defaults'
 import Producer from './producer'
 import Consumer from './consumer'
 import DeadLetterQueue from './dead-letter-queue'
-
-const EXCHANGE = 'messages'
-const DEAD_LETTER_EXCHANGE = 'delayed.messages'
-const DELAYED_QUEUE = 'work.later'
-const DESTINATION_QUEUE = 'work.now'
-
-const messages = [
-    'First',
-    'Second',
-    'Third'
-]
+import Initializers from './initializers'
+import cli from './cli'
 
 function calculateTTL(ttl: number, index: number) {
     return ttl * (index + 1)
 }
 
+function generateMessages(numberOfMessage: number) {
+    return [...Array(numberOfMessage).keys()].map(number => `Message nº ${number+1}`)
+}
+
 async function execute() {
+    const config = await cli()
     const connection = await amqp.connect(env.rabbitMQ.url)
     const producerChannel = await connection.createChannel()
     const consumerChannel = await connection.createChannel()
 
-    const producer = new Producer(producerChannel, EXCHANGE)
-    await producer.setup()
+    if(config.initializers.includes(Initializers.producer)) {
+        const producer = new Producer(producerChannel, defaults.EXCHANGE)
+        await producer.setup()
 
-    const delayedQueue = new DeadLetterQueue(consumerChannel, DELAYED_QUEUE)
-    await delayedQueue.setup(EXCHANGE, DEAD_LETTER_EXCHANGE)
+        const delayedQueue = new DeadLetterQueue(consumerChannel, defaults.DELAYED_QUEUE)
+        await delayedQueue.setup(defaults.EXCHANGE, config.exchangeName)
 
-    const consumer = new Consumer(consumerChannel, DESTINATION_QUEUE)
-    await consumer.setup(DEAD_LETTER_EXCHANGE)
+        const messages = generateMessages(config.numberOfMessages)
 
-    await consumer.consume()
+        await messages.forEach((message, index) => 
+            producer.publish(message, calculateTTL(config.delay, index))
+        )
+    }
 
-    await messages.forEach((message, index) => 
-        producer.publish(message, calculateTTL(env.rabbitMQ.messageTTL, index))
-    )
+    if(config.initializers.includes(Initializers.consumer)) {
+        const consumer = new Consumer(consumerChannel, defaults.DESTINATION_QUEUE)
+        await consumer.setup(config.exchangeName)
+        await consumer.consume()
+    }
 }
 
 execute()
