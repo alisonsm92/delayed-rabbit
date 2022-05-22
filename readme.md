@@ -10,16 +10,16 @@ Na exchange de atraso vamos configurar um tempo de expiração (TTL) para as men
 
 Desde modo toda mensagem publicada permanecerá na exchange de atraso até que tempo de expiração seja atingido. Após a expiração da mensagem ela é encaminhada para a fila de mensagens mortas que irá reencaminha-la a para a exchange destino.
 
-#### Cenário sem atraso:
+#### Cenário sem atraso
 
 ```mermaid
 sequenceDiagram
     Produtor-->>Exchange destino: Publica mensagem
     Exchange destino-->>Fila destino: Encaminha a mensagem
-    Fila destino-->>Consumidor: Consume a mensagem
+    Fila destino-->>Consumidor: Consome a mensagem
 ```
 
-#### Cenário com atraso:
+#### Cenário com atraso
 
 ```mermaid
 sequenceDiagram
@@ -30,5 +30,5 @@ sequenceDiagram
     Dead letter-->>Exchange destino: Encaminha a mensagem
     end
     Exchange destino-->>Fila destino: Encaminha a mensagem
-    Fila destino-->>Consumidor: Consume a mensagem
+    Fila destino-->>Consumidor: Consome a mensagem
 ```
