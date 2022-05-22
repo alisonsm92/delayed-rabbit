@@ -24,7 +24,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     Produtor-->>Exchange de atraso: Publica mensagem
-    rect rgb(233, 233, 254)
+    rect rgb(110, 170, 211)
     note right of Exchange de atraso: Message permanece na fila<br>até o tempo de expiração (TTL) ser atingido
     Exchange de atraso-->>Dead letter: Encaminha a mensagem
     Dead letter-->>Exchange destino: Encaminha a mensagem
