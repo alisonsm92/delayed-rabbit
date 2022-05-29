@@ -36,3 +36,64 @@ sequenceDiagram
     Exchange destino--)Fila destino: ✉️ Encaminha a mensagem
     Fila destino--)Consumidor: 📬 Consome a mensagem
 ```
+
+## Executando a aplicação
+
+Tenha instalado [NodeJS](https://nodejs.org) ou [Docker](https://docs.docker.com) na sua máquina.
+
+É possível substituir as configurações padrões criando um arquivo `.env`, seguindo o exemplo do arquivo `.env.example`.
+As seguintes configurações podem ser definidas:
+* App:
+  * `APP_NAME` Nome da aplicação
+* Logger ([Pino](https://github.com/pinojs/pino))
+  * `LOG_LEVEL` Especifica o nível dos logs a serem exibidos `fatal|error|warn|info|debug|trace|silent`
+  * `LOG_PRETTY_PRINT` Ativa ou desativa formatação dos logs `true|false`
+* RabbitMQ:
+  * `RABBITMQ_URL` URL para conexão com o rabbitMQ
+
+### Inicializando a aplicação com Docker Compose
+
+```shell
+docker compose run app
+```
+
+**Nota**: Neste modo de inicialização serão inicializados localmente containers para a aplicação e para o [RabbitMQ](https://www.rabbitmq.com/). Desta maneira não é necessário configurar o RabbitMQ de forma independente.
+
+**Nota**: Para encerrar a execução da aplicação e o RabbitMQ execute o seguinte comando:
+
+```shell
+docker compose down
+```
+
+### Inicializando a aplicação com NodeJS
+
+```shell
+npm i
+npm run build
+npm run start
+```
+
+**Nota**: _Neste modo de inicialização é necessário rodar de forma independente o RabbitMQ e definir a valor para a variável de ambiente `RABBITMQ_URL` no arquivo `.env`_.
+
+### Definindo as configurações para o envio das mensagens
+
+Após inicializar a aplicação siga as instruções apresentadas no console para definir as configurações para o envio das mensagens:
+
+<center>
+  <img src="assets/main-menu.png" align="center" alt="Menu principal" width="350"/>
+  <p><i>Figura 1:  Menu principal</i></p>
+</center>
+<br>
+<center>
+  <img src="assets/config-menu.png" align="center" alt="Menu de configuração" width="800"/>
+  <p><i>Figura 2:  Menu de configurações</i></p>
+</center>
+
+## Comandos
+
+Os comandos a seguir podem ser executados em um ambiente com o [NodeJS](https://nodejs.org) instalado e após instalar as dependências do projeto (`npm i`).
+
+Comando   | Descrição
+--------- | ------
+`npm run start` | Inicializa aplicação
+`npm run build` | Executa o build do projeto transpilando o código TypeScript para JS
