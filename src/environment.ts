@@ -5,6 +5,6 @@ export default {
         prettyPrint: process.env.LOG_PRETTY_PRINT === 'true' || false
     },
     rabbitMQ: {
-        url: process.env.RABBITMQ_URL || 'amqp://localhost:5672'
+        url: process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672'
     }
 }

@@ -4,7 +4,7 @@
   "description": "Testing combination of  TTL and DLX to delay message delivery on RabbitMQ",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "node dist/index.js",
     "build": "rimraf dist && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
