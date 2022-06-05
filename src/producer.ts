@@ -1,6 +1,6 @@
 import { Channel } from 'amqplib'
 import { Buffer } from 'buffer'
-import ExchangeTypes from './exchange-types'
+import ExchangeTypes from './contracts/exchange-types'
 import logger from './logger'
 
 export default class Producer {

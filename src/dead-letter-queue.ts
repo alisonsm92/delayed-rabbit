@@ -1,5 +1,5 @@
 import { Channel } from 'amqplib'
-import ExchangeTypes from './exchange-types'
+import ExchangeTypes from './contracts/exchange-types'
 
 export default class DeadLetterQueue {
     private channel: Channel

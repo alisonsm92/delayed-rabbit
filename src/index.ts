@@ -1,12 +1,12 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import amqp from 'amqplib'
-import env from './environment'
-import defaults from './defaults'
+import env from './config/environment'
+import defaults from './config/defaults'
 import Producer from './producer'
 import Consumer from './consumer'
 import DeadLetterQueue from './dead-letter-queue'
-import Initializers from './initializers'
+import Initializers from './contracts/initializers'
 import cli from './cli'
 
 function calculateTTL(ttl: number, index: number) {

@@ -1,6 +1,6 @@
 import { ListQuestion, Question } from 'inquirer'
-import * as Configuration from '../../configuration'
-import Initializers from '../../initializers'
+import * as Configuration from '../../contracts/configuration'
+import Initializers from '../../contracts/initializers'
 
 const initializers: ListQuestion = {
     name: Configuration.properties.initializers,

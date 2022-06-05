@@ -2,11 +2,11 @@ import inquirer from 'inquirer'
 import initializers from './questions/initializers'
 import exchange from './questions/exchange'
 import messages from './questions/messages'
-import Configuration from '../configuration'
-import defaults from '../defaults'
-import Initializers from '../initializers'
-import ExchangeTypes from '../exchange-types'
-import ExchangeConfigOptions from '../exchange-config-options'
+import Configuration from '../contracts/configuration'
+import defaults from '../config/defaults'
+import Initializers from '../contracts/initializers'
+import ExchangeTypes from '../contracts/exchange-types'
+import ExchangeConfigOptions from '../contracts/exchange-config-options'
 
 type InputConfiguration = {
     initializers: Initializers[]

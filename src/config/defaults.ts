@@ -1,4 +1,4 @@
-import ExchangeTypes from "./exchange-types";
+import ExchangeTypes from "../contracts/exchange-types";
 
 export default {
     EXCHANGE: 'messages',

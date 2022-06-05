@@ -1,6 +1,6 @@
 import { Question } from 'inquirer'
-import defaults from '../../defaults'
-import * as Configuration from '../../configuration'
+import defaults from '../../config/defaults'
+import * as Configuration from '../../contracts/configuration'
 
 const numberOfMessages: Question = {
     name: Configuration.properties.numberOfMessages,

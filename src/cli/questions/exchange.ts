@@ -1,8 +1,8 @@
 import { Answers, ListQuestion, Question } from 'inquirer'
-import * as Configuration from '../../configuration'
-import defaults from '../../defaults'
-import ExchangeConfigOptions from '../../exchange-config-options'
-import ExchangeTypes from '../../exchange-types'
+import * as Configuration from '../../contracts/configuration'
+import defaults from '../../config/defaults'
+import ExchangeConfigOptions from '../../contracts/exchange-config-options'
+import ExchangeTypes from '../../contracts/exchange-types'
 
 const isManualConfig = (answers: Answers) => answers.exchangeConfigOptions === ExchangeConfigOptions.manual
 
